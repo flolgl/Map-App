@@ -1,5 +1,5 @@
 import { FormControl, Button, Input, InputLabel } from "@mui/material"
-import React, { useReducer, useState } from "react";
+import React, { useState } from "react";
 import "./style/Form.css";
 import * as EmailValidator from "email-validator";
 
@@ -21,7 +21,11 @@ export const Form = () => {
 
 
     const hasErrors = ():boolean =>{
+        setError({login: false, password:false})
 
+        //console.log(signUpData)
+        //console.log(EmailValidator.validate(signUpData.login))
+        
         if (!EmailValidator.validate(signUpData.login))
             setError({...error, login: true})
         if (signUpData.password === "")
@@ -31,14 +35,14 @@ export const Form = () => {
 
     const handleSubmit = (evt: React.FormEvent)  => {
         evt.preventDefault();
-        if (hasErrors())
-            return;
+        if (!hasErrors())
+            return console.log("erruer");
 
-        fetch("https://pointy-gauge.glitch.me/api/form", {
+        fetch("http://localhost:4000/login", {
             method: "POST",
             body: JSON.stringify(signUpData),
             headers: {
-            "Content-Type": "application/json"
+                "Content-Type": "application/json"
             }
         }).then(response => response.json())
         .then(response => console.log("Success:", JSON.stringify(response)))
@@ -60,13 +64,13 @@ export const Form = () => {
                 <div className="formInput">
                     <FormControl>
                         <InputLabel htmlFor="my-input">Email address</InputLabel>
-                        <Input id="my-input" aria-describedby="my-helper-text" onChange={handleInput} error={error.login}/>
+                        <Input name="login" id="my-input" aria-describedby="my-helper-text" onChange={handleInput} error={error.login}/>
                     </FormControl>
                 </div>
                 <div className="formInput">
                     <FormControl>
                         <InputLabel htmlFor="my-input">Password</InputLabel>
-                        <Input type="password"id="my-input" aria-describedby="my-helper-text" onChange={handleInput} error={error.password}/>
+                        <Input name="pw" type="password"id="my-input" aria-describedby="my-helper-text" onChange={handleInput} error={error.password}/>
                     </FormControl>
                 </div>
 
