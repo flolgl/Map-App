@@ -1,5 +1,6 @@
 import { FormControl, Button, Input, InputLabel } from "@mui/material"
 import React, { useState } from "react";
+import {useNavigate} from 'react-router-dom'
 import "./style/Form.css";
 import * as EmailValidator from "email-validator";
 
@@ -18,34 +19,41 @@ export const Form = () => {
 
     const [signUpData, setSignUpData] = useState<ISignUpData>({login: "", password: ""})
     const [error, setError] = useState<ISingUpErr>({login: false, password: false})
-
+    const navigate = useNavigate();
 
     const hasErrors = ():boolean =>{
-        setError({login: false, password:false})
 
-        //console.log(signUpData)
-        //console.log(EmailValidator.validate(signUpData.login))
-        
+        let loginError = false, pwError = false;
+
         if (!EmailValidator.validate(signUpData.login))
-            setError({...error, login: true})
+            loginError=true
         if (signUpData.password === "")
-            setError({...error, password: true})
-        return !error.password && !error.login;
+            pwError = true
+
+        setError({login:loginError, password:pwError})
+        return loginError || pwError;
+
     }
 
     const handleSubmit = (evt: React.FormEvent)  => {
         evt.preventDefault();
-        if (!hasErrors())
-            return console.log("erruer");
+        console.log(hasErrors())
+        if (hasErrors())
+            return;
+
+        console.log("je suis ici")
 
         fetch("http://localhost:4000/login", {
             method: "POST",
+            credentials: 'include',
+            mode:"cors",
             body: JSON.stringify(signUpData),
-            headers: {
-                "Content-Type": "application/json"
-            }
+                headers: {
+                    "Content-Type": "application/json"
+                }
         }).then(response => response.json())
         .then(response => console.log("Success:", JSON.stringify(response)))
+        .then(() => navigate("/map"))
         .catch(err => setError(err));
     };
 
@@ -57,9 +65,9 @@ export const Form = () => {
         else
             setSignUpData({...signUpData, password: newValue});
     };
-    
+
     return (
-        <div className="container minTaille">
+        <form className="container minTaille" onKeyPress={(e => {if (e.key==="Enter") handleSubmit(e)})}>
             <div className="form shadow">
                 <div className="formInput">
                     <FormControl>
@@ -70,7 +78,7 @@ export const Form = () => {
                 <div className="formInput">
                     <FormControl>
                         <InputLabel htmlFor="my-input">Password</InputLabel>
-                        <Input name="pw" type="password"id="my-input" aria-describedby="my-helper-text" onChange={handleInput} error={error.password}/>
+                        <Input name="pw" type="password" id="my-input" aria-describedby="my-helper-text" onChange={handleInput} error={error.password}/>
                     </FormControl>
                 </div>
 
@@ -78,6 +86,6 @@ export const Form = () => {
                     <Button variant="outlined" fullWidth={true} onClick={handleSubmit}>Login</Button>
                 </div>
             </div>
-        </div>
+        </form>
     )
 } 
