@@ -1,7 +1,7 @@
 import { FormControl, Button, Input, InputLabel } from "@mui/material"
 import React, { useState } from "react";
 import {useNavigate} from 'react-router-dom'
-import "./style/Form.css";
+import "./style/index.css";
 import * as EmailValidator from "email-validator";
 
 interface ISignUpData {

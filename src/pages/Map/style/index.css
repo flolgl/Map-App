@@ -1,0 +1,15 @@
+.mapContainer{
+    z-index: 1;
+    position: relative;
+}
+
+.mealListContainer {
+    max-width: 33%;
+    position: absolute;
+    z-index: 2;
+    height: 98%;
+    right: 0;
+    margin-right: 1rem;
+    top: 1%;
+    bottom: 1%;
+}
