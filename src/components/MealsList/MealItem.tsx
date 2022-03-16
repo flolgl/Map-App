@@ -1,50 +1,54 @@
 import curry from "../../assets/images/curry.png";
 import {IconButton} from "@mui/material";
 import DirectionsIcon from "@mui/icons-material/Directions";
-import React, {SetStateAction, useState} from "react";
-import {Location, MarkerLoc} from "../Map/LeafletMap";
-import {LatLngTuple} from "leaflet";
+import React, {useState} from "react";
 import {AlertDialog} from "../Dialog/Dialog";
+import {restoObject} from "./MealsList";
+import {Marker, Popup} from "react-leaflet";
+import {LatLngTuple} from "leaflet";
 
 interface Props{
-    locationSetter:React.Dispatch<SetStateAction<Location>>,
-    markerTabSetter:React.Dispatch<SetStateAction<MarkerLoc>>,
-    markers:MarkerLoc
-
+    item:restoObject
 }
 
 export const MealItem = (props:Props) => {
-    const [open, setOpen] = useState(false);
-    const [userLocation, setUserLocation] = useState<Location | null>(null)
+    /**
+     * Used to display dialog popup
+     */
+    const [dialogOpened, setDialogOpened] = useState(false);
+    /**
+     * Used to know if button has been pressed
+     * if true, pin location is showed
+     */
+    const [locationPin, setlocationPin] = useState(false);
 
-    console.log(userLocation)
-
-    const addMarker = (loc: LatLngTuple) => {
-        const newMarkers = props.markers.markerTab
-        newMarkers.push(loc)
-        props.markerTabSetter({markerTab: newMarkers})
-    }
+    const showItemLocationPin = (location:LatLngTuple) => (
+        <Marker position={location}>
+            <Popup>
+                {props.item.nom}
+            </Popup>
+        </Marker>
+    )
 
     return (
         <div className="mealContainer">
             <img className="mealItem" src={curry} alt="curry"/>
             <div className="mealItem textItem itemIcon">
-                <h1 className="text">Curry rice</h1>
-                <p className="text">C'est si doux !</p>
+                <h1 className="text">{props.item.nom}</h1>
+                <p className="text">{props.item.descriptif}</p>
             </div>
             <div className="mealItem itemIcon">
                 <div className="">
                     <IconButton aria-label="Direction" size="large" onClick={() => {
-                        setOpen(!open)
-                        navigator.geolocation.getCurrentPosition((res) => {
-                            setUserLocation({LatLng: [res.coords.latitude, res.coords.longitude]})
-                            props.locationSetter({LatLng: [res.coords.latitude, res.coords.longitude]})
-                            addMarker([res.coords.latitude, res.coords.longitude])
-                        })
+                        setDialogOpened(!dialogOpened)
+                        setlocationPin(true)
+
                     }}>
+                        {locationPin?showItemLocationPin(props.item.location):null}
+
                         <DirectionsIcon fontSize="large"  />
                     </IconButton>
-                    <AlertDialog open={open} setOpen={setOpen}/>
+                    <AlertDialog open={dialogOpened} setOpen={setDialogOpened}/>
                 </div>
             </div>
 

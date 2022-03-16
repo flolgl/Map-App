@@ -1,31 +1,34 @@
-import {LeafletMap, Location, MarkerLoc} from "../../components/Map/LeafletMap"
 import {MealsList} from "../../components/MealsList/MealsList";
 import "./style/index.css"
-import React, {useState} from "react";
+import React from "react";
+import {MapContainer, TileLayer} from "react-leaflet";
+import {RoutingMachine} from "../../components/Map/RoutingMachine";
+import {LatLngTuple} from "leaflet";
+
+const zoom:number = 13.45;
+
+const mapCenteringPos:LatLngTuple = [48.864211, 2.380104];
+
+export const Map = () => (
+
+    <>
+        <div className="mapContainer">
+            <MapContainer id="mapId"
+                          center={mapCenteringPos}
+                          zoom={zoom}
+            >
+                <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                />
 
 
+                <div className="mealListContainer">
+                    <MealsList/>
+                </div>
+                <RoutingMachine/>
 
-export const Map = () => {
-
-    const [location, setLocation] = useState<Location>({LatLng: [48.864211, 2.380104]});
-    const [markers, setMarker] = useState<MarkerLoc>({markerTab:[[48.864211, 2.380104]]})
-
-
-    console.log(location)
-    console.log(markers)
-
-    return (
-        <>
-            <div className="mapContainer">
-                <LeafletMap LatLng={location} markerTab={markers}/>
-            </div>
-
-            <div className="mealListContainer">
-                <MealsList locationSetter={setLocation}
-                           markers={markers} markerTabSetter={setMarker} />
-            </div>
-
-
-        </>
-    )
-}
+            </MapContainer>
+        </div>
+    </>
+)
