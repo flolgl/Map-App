@@ -1,4 +1,4 @@
-import { FormControl, Button, Input, InputLabel } from "@mui/material"
+import {Button, TextField} from "@mui/material"
 import React, { useState } from "react";
 import {useNavigate} from 'react-router-dom'
 import "./style/index.css";
@@ -10,28 +10,29 @@ interface ISignUpData {
 }
 
 interface ISingUpErr{
-    login: boolean;
-    password: boolean;
+    formError : string;
+    login: string;
+    password: string;
 }
 
 export const Form = () => {
 
 
     const [signUpData, setSignUpData] = useState<ISignUpData>({login: "", password: ""})
-    const [error, setError] = useState<ISingUpErr>({login: false, password: false})
+    const [error, setError] = useState<ISingUpErr>({formError: "", login: "", password: ""})
     const navigate = useNavigate();
 
     const hasErrors = ():boolean =>{
 
-        let loginError = false, pwError = false;
+        let loginError = "", pwError = "";
 
         if (!EmailValidator.validate(signUpData.login))
-            loginError=true
+            loginError= "The email is not a valid email address."
         if (signUpData.password === "")
-            pwError = true
+            pwError = "Password cannot be empty."
 
-        setError({login:loginError, password:pwError})
-        return loginError || pwError;
+        setError({...error, login:loginError, password:pwError})
+        return loginError !== "" || pwError !== "";
 
     }
 
@@ -52,9 +53,8 @@ export const Form = () => {
                     "Content-Type": "application/json"
                 }
         }).then(response => response.json())
-        .then(response => console.log("Success:", JSON.stringify(response)))
-        .then(() => navigate("/map"))
-        .catch(err => setError(err));
+        .then(response => response.err ? setError({...error, formError:response.err}) : navigate("/map"))
+        .catch(err => setError({...error, formError:err}));
     };
 
     const handleInput = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -66,26 +66,28 @@ export const Form = () => {
             setSignUpData({...signUpData, password: newValue});
     };
 
-    return (
-        <form className="container minTaille" onKeyPress={(e => {if (e.key==="Enter") handleSubmit(e)})}>
-            <div className="form shadow">
-                <div className="formInput">
-                    <FormControl>
-                        <InputLabel htmlFor="my-input">Email address</InputLabel>
-                        <Input name="login" id="my-input" aria-describedby="my-helper-text" onChange={handleInput} error={error.login}/>
-                    </FormControl>
-                </div>
-                <div className="formInput">
-                    <FormControl>
-                        <InputLabel htmlFor="my-input">Password</InputLabel>
-                        <Input name="pw" type="password" id="my-input" aria-describedby="my-helper-text" onChange={handleInput} error={error.password}/>
-                    </FormControl>
-                </div>
 
-                <div className="formInput container">
-                    <Button variant="outlined" fullWidth={true} onClick={handleSubmit}>Login</Button>
+    return (
+        <>
+            <div/>
+            <form className="container minTaille" onKeyPress={(e => {if (e.key==="Enter") handleSubmit(e)})}>
+                <div className="form shadow">
+                    <div className="formInput">
+                        <TextField name="login" fullWidth label={"Email address"} id="my-input" aria-describedby="my-helper-text" onChange={handleInput} error={error.login !== ""} helperText={error.login}/>
+                    </div>
+                    <div className="formInput">
+                        <TextField name="pw" fullWidth label={"Password"} type="password" id="my-input" aria-describedby="my-helper-text" onChange={handleInput} error={error.password !== ""} helperText={error.password}/>
+                    </div>
+
+                    <p className="errorText">{error.formError}</p>
+
+                    <div className="formInput container">
+                        <Button variant="outlined" fullWidth={true} onClick={handleSubmit}>Login</Button>
+                    </div>
                 </div>
-            </div>
-        </form>
-    )
+            </form>
+            <div/>
+        </>
+
+)
 } 

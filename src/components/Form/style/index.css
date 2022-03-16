@@ -4,11 +4,6 @@
 
 }
 
-.minTaille{
-    min-width: 350px;
-    min-height: 300px;
-}
-
 .form{
     display: flex;
     flex-direction: column;
@@ -23,4 +18,11 @@
 .formInput{
     margin-top:1em;
     margin-bottom:1em;
+}
+
+.errorText{
+    color:#d32f2f;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    text-align: center;
+    margin:0;
 }
