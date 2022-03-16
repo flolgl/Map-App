@@ -20,6 +20,10 @@ const App:React.FC = () => {
             }
         }).then(response => response.json())
         .then(response => {
+            //console.log("ici")
+            if (location.pathname === "/" && !response.loggedIn)
+                return;
+
             if (!response.loggedIn)
                 return navigate("/")
 
@@ -27,7 +31,7 @@ const App:React.FC = () => {
                 navigate("/map")
         })
 
-    }, [navigate])
+    }, [location.pathname, navigate])
   return (
     <div className='app'>
 {/*        <div className='form'>
