@@ -67,6 +67,8 @@ export const Form = () => {
     };
 
     return (
+        <div>
+            <h1 id="titre">Bienvenue sur TikkaExpress !</h1>
         <form className="container minTaille" onKeyPress={(e => {if (e.key==="Enter") handleSubmit(e)})}>
             <div className="form shadow">
                 <div className="formInput">
@@ -87,5 +89,7 @@ export const Form = () => {
                 </div>
             </div>
         </form>
+        </div>
+      
     )
 } 
