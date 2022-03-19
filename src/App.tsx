@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {Routes, Route, Link, useNavigate, useLocation} from "react-router-dom";
 import './App.css';
-import { Form } from './components/Form';
-import {LeafletMap} from "./components/LeafletMap";
+import { Form } from './components/Form/Form';
+import {Map} from "./pages/Map/Map";
 
 const App:React.FC = () => {
 
@@ -20,6 +20,10 @@ const App:React.FC = () => {
             }
         }).then(response => response.json())
         .then(response => {
+            //console.log("ici")
+            if (location.pathname === "/" && !response.loggedIn)
+                return;
+
             if (!response.loggedIn)
                 return navigate("/")
 
@@ -27,7 +31,7 @@ const App:React.FC = () => {
                 navigate("/map")
         })
 
-    }, [navigate])
+    }, [location.pathname, navigate])
   return (
     <div className='app'>
 {/*        <div className='form'>
@@ -35,7 +39,7 @@ const App:React.FC = () => {
         </div>*/}
         <Routes>
             <Route path="/" element={<Form/>} />
-            <Route path="map" element={<LeafletMap />} />
+            <Route path="map" element={<Map/>} />
         </Routes>
 
     </div>
