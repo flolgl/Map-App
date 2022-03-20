@@ -11,3 +11,6 @@
 - Dans le terminal du dossier map-app
 - ``npm start``
 - La webapp s'ouvre dans votre navigateur à l'adresse [http://localhost:3000](http://localhost:3000)
+
+## Tester l'app
+- Il existe un utilisateur : flo@ou.fr 1234
