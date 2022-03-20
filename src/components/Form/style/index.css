@@ -1,14 +1,30 @@
+body{
+    background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255, 255, 255, 0.5)),
+                  url("bouffe.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+}
+
+#titre{
+    color: black
+}
+
+
+
 .container{
     display: flex;
     justify-content: center;
+    transform: scale(0.9);
 
 }
 
 .form{
+    background-image: linear-gradient(rgba(255,255,255,0.9), rgba(255, 255, 255, 0.9));
     display: flex;
     flex-direction: column;
     padding: 5em;
-    border-radius: 10px;
+    border-radius: 25px;
 }
 
 .shadow{
