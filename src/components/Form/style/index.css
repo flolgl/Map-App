@@ -1,6 +1,6 @@
 body{
     background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255, 255, 255, 0.5)),
-                  url("bouffe.jpg");
+                  url("../../../assets/images/bouffe.jpg");
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover;
