@@ -109,7 +109,7 @@ export const MealItem = (props:Props) => {
                     <img className="mealImg" src={require(`../../assets/images/${props.item.lettre}.png`)} alt="curry"/>
                 </div>
                 <div className="mealItem textItem">
-                    <h1 className="text"><a href={props.item.site ? props.item.site : ""}>{props.item.nom}</a></h1>
+                    <h1 className="text"><a href={props.item.site ? props.item.site : "#"}>{props.item.nom}</a></h1>
                     <p className="text">{props.item.descriptif}</p>
                 </div>
 

@@ -8,7 +8,7 @@ const App:React.FC = () => {
 
     const navigate = useNavigate();
     const location = useLocation()
-
+    document.title= "Tikka Express"
     useEffect(() => {
         fetch("http://localhost:4000/login", {
             credentials: 'include',
