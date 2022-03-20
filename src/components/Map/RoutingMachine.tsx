@@ -1,20 +1,30 @@
 import L from "leaflet";
 import { createControlComponent } from "@react-leaflet/core";
 import "leaflet-routing-machine";
+import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'
 
+export let instance:L.Routing.Control;
 const createRoutineMachineLayer = (props:any) => {
-    return L.Routing.control({
+    instance = L.Routing.control({
         waypoints: [
-            //L.latLng(props.depart[0], props.depart[1]),
-            //L.latLng(props.arrivee[0], props.arrivee[1])
+            L.latLng(props.location[0]),
+            L.latLng(props.location[1])
         ],
         show: false,
         addWaypoints: false,
         routeWhileDragging: true,
         fitSelectedRoutes: true,
-        showAlternatives: false
+        showAlternatives: false,
     });
 
+    // console.log()
+
+    // instance.getRouter().options[0] = L.latLng(props.location[0])
+    return instance;
 };
 
-export const RoutingMachine = createControlComponent(createRoutineMachineLayer);
+// Pass our createRoutingMachineLayer to the createControlHook:
+const RoutingMachine = createControlComponent(createRoutineMachineLayer);
+
+// Export
+export default RoutingMachine;

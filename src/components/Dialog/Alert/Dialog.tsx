@@ -9,6 +9,8 @@ import Button from "@mui/material/Button";
 interface Props{
     setOpen:React.Dispatch<SetStateAction<boolean>>,
     open:boolean
+    text:string
+    title:string
 
 }
 
@@ -31,11 +33,11 @@ export const AlertDialog = (props:Props) => {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Laissez-nous utiliser votre localisation?"}
+                    {props.title}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Vous vous apprêtez à partager votre localisation avec nous.
+                        {props.text}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

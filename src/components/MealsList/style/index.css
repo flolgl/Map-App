@@ -1,26 +1,73 @@
+:root {
+    --main-bg-color: #fff;
+    --main-bg-color-dark: #121212;
+}
+
+
 .listContainer{
-    height: 100%;
-    border-radius: 20px;
-    background-color: #fff;
+    height: 94%;
+    background-color: var(--main-bg-color);
     overflow: auto;
+    position: relative;
+    cursor: initial;
+    border-radius: 20px 20px 20px 0;
+    padding-bottom: 5px;
+}
+
+.buttonContainer{
+    display: flex;
+    justify-content: center;
+    padding: 1em 1em 2em;
+}
+
+.bottomContainer{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background: var(--main-bg-color);
+    border-radius: 0px 0px 20px 20px;
 }
 
 .mealContainer{
     padding: 1em;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     gap:1em;
     border-bottom: 1px solid #ced4da;
-    flex-wrap: wrap;
+}
+
+@media (max-width: 960px) {
+    .mealContainer{
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    img.mealItem {
+        max-width: 100px;
+    }
+    /* Rédigez vos propriétés CSS ici */
 }
 
 .mealItem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
+.mealImg{
+    max-width: 64px;
 }
 
 .textItem{
     text-align: center;
     flex-direction: column;
+    max-width: 150px;
+    width: -moz-available;
+}
+a{
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.65) !important;
 }
 
 .text{
@@ -32,5 +79,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.votesContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.votesCounter{
+    text-align: center;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 14px;
+    margin: 0.1em;
 }
 

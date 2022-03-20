@@ -2,7 +2,6 @@ import {MealsList} from "../../components/MealsList/MealsList";
 import "./style/index.css"
 import React from "react";
 import {MapContainer, TileLayer} from "react-leaflet";
-import {RoutingMachine} from "../../components/Map/RoutingMachine";
 import {LatLngTuple} from "leaflet";
 
 const zoom:number = 13.45;
@@ -26,7 +25,6 @@ export const Map = () => (
                 <div className="mealListContainer">
                     <MealsList/>
                 </div>
-                <RoutingMachine/>
 
             </MapContainer>
         </div>

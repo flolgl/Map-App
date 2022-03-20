@@ -42,7 +42,7 @@ export const Form = () => {
         if (hasErrors())
             return;
 
-        console.log("je suis ici")
+        // console.log("je suis ici")
 
         fetch("http://localhost:4000/login", {
             method: "POST",
@@ -73,7 +73,7 @@ export const Form = () => {
             <form className="container minTaille" onKeyPress={(e => {if (e.key==="Enter") handleSubmit(e)})}>
                 <div className="form shadow">
                     <div className="formInput">
-                        <TextField name="login" fullWidth label={"Email address"} id="my-input" aria-describedby="my-helper-text" onChange={handleInput} error={error.login !== ""} helperText={error.login}/>
+                        <TextField name="login" autoFocus fullWidth label={"Email address"} id="my-input" aria-describedby="my-helper-text" onChange={handleInput} error={error.login !== ""} helperText={error.login}/>
                     </div>
                     <div className="formInput">
                         <TextField name="pw" fullWidth label={"Password"} type="password" id="my-input" aria-describedby="my-helper-text" onChange={handleInput} error={error.password !== ""} helperText={error.password}/>
