@@ -1,4 +1,4 @@
-#INSTALLATION
+# INSTALLATION
 
 ## Installer les dépendances du projet
 - Ouvrir un terminal dans le dossier map-app
